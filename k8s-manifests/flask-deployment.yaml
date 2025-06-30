@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-service
+  template:
+    metadata:
+      labels:
+        app: flask-service
+    spec:
+      containers:
+      - name: flask-service
+        image: flask-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: USER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: flask-config
+              key: USER_NAME
+        resources: 
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
