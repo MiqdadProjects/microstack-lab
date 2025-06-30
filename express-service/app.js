@@ -2,8 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 
-const FLASK_SERVICE_HOST = 'localhost';
-const FLASK_SERVICE_PORT = 5000;
+const FLASK_SERVICE_HOST = process.env.FLASK_SERVICE_HOST || 'flask-service';
+const FLASK_SERVICE_PORT = process.env.FLASK_SERVICE_PORT || 5000;
 
 app.get('/', (req, res) => {
   res.send('Welcome to the Express Service!');

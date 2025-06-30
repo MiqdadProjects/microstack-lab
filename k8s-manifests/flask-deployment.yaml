@@ -1,30 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-service
+  name: express-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask-service
+      app: express-service
   template:
     metadata:
       labels:
-        app: flask-service
+        app: express-service
     spec:
       containers:
-      - name: flask-service
-        image: flask-service:latest
+      - name: express-service
+        image: express-service:latest
         imagePullPolicy: Never
         ports:
-        - containerPort: 5000
+        - containerPort: 3000
         env:
-        - name: USER_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: flask-config
-              key: USER_NAME
-        resources: 
+        - name: FLASK_SERVICE_HOST
+          value: "flask-service"
+        - name: FLASK_SERVICE_PORT
+          value: "5000"
+        resources:
           requests:
             memory: "64Mi"
             cpu: "100m"
